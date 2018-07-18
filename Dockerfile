@@ -23,5 +23,6 @@ COPY --from=0 /tmp/gst/dist .
 
 RUN apk --update --no-cache add python3
 RUN python3 -m easy_install ./greedy_string_tiling-*.egg
+RUN python3 -m pip install celery
 
 ENTRYPOINT python3 -m celery worker --app matchlib.celerymain --concurrency 1 --queue gst_matchlib_tasks --loglevel INFO
