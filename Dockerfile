@@ -7,10 +7,10 @@ ARG GST_TAR_URL=https://github.com/Aalto-LeTech/greedy-string-tiling/archive/v$G
 
 WORKDIR /tmp/gst
 
-RUN apk --update --no-cache add tar
-RUN apk --no-cache add curl python3-dev g++
-RUN curl --location $GST_TAR_URL | tar --extract --gunzip --strip-components 1
-RUN python3 setup.py bdist_egg
+RUN apk --update --no-cache add tar \
+    && apk --no-cache add curl python3-dev g++ \
+    && curl --location $GST_TAR_URL | tar --extract --gunzip --strip-components 1 \
+    && python3 setup.py bdist_egg
 
 
 # Install the built Python binary
@@ -21,8 +21,8 @@ WORKDIR /var/gst
 # Copy from previous build stage
 COPY --from=0 /tmp/gst/dist .
 
-RUN apk --update --no-cache add python3
-RUN python3 -m easy_install ./greedy_string_tiling-*.egg
-RUN python3 -m pip install celery
+RUN apk --update --no-cache add python3 \
+    && python3 -m easy_install ./greedy_string_tiling-*.egg \
+    && python3 -m pip install celery
 
 ENTRYPOINT python3 -m celery worker --app matchlib.celerymain --concurrency 1 --queue gst_matchlib_tasks --loglevel INFO
