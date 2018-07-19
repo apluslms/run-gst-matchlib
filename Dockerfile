@@ -20,7 +20,7 @@ WORKDIR /var/gst
 # Copy from previous build stage
 COPY --from=0 /tmp/gst/dist .
 
-RUN apk --update --no-cache add python3 \
+RUN apk --update --no-cache add python3 libstdc++ \
     && python3 -m easy_install ./greedy_string_tiling-*.egg \
     && python3 -m pip install celery
 
