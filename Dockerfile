@@ -7,8 +7,7 @@ ARG GST_TAR_URL=https://github.com/Aalto-LeTech/greedy-string-tiling/archive/v$G
 
 WORKDIR /tmp/gst
 
-RUN apk --update --no-cache add tar \
-    && apk --no-cache add curl python3-dev g++ \
+RUN apk --update --no-cache add tar curl python3-dev g++ \
     && curl --location $GST_TAR_URL | tar --extract --gunzip --strip-components 1 \
     && python3 setup.py bdist_egg
 
