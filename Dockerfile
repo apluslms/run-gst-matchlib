@@ -2,7 +2,7 @@
 
 FROM alpine:3.7
 
-ARG GST_VERSION=0.11.0
+ARG GST_VERSION=0.12.0
 ARG GST_TAR_URL=https://github.com/Aalto-LeTech/greedy-string-tiling/archive/v$GST_VERSION.tar.gz
 
 WORKDIR /tmp/gst
